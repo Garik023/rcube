@@ -15,15 +15,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(CubeController::class)->group(function () {
+Route::controller(CubeController::class)
+    ->prefix('cube')
+    ->as('cube.')
+    ->group(function () {
 
     /**
-     * side ('U', 'L', 'F', 'R', 'B', 'D')
-     * row (1, 2, 3)
-     * direction ('vertical', 'horizontal')
-     * degree (90, 180),
+     * Get Rotated cube
      *
-     * request example: {host}/api/rotate?side=D&direction=horizontal&degree=90
+     * @method {get}
+     *
+     * @requestExample: {host}/api/cube/
      */
-    Route::get('rotate', 'rotate');
+    Route::get('/', 'index')->name('rotated');
+
+    /**
+     * Get Initial cube
+     *
+     * @method {get}
+     *
+     * @requestExample: {host}/api/cube/initial
+     */
+    Route::get('initial', 'initial')->name('initial');
+
+    /**
+     * Rotate cube
+     *
+     * @method {post}
+     *
+     * @param 'side' @values ('U', 'L', 'F', 'R', 'B', 'D')
+     * @param 'direction' @values ('vertical', 'horizontal')
+     * @param 'degree' @values (90, 180),
+     *
+     * @requestExample: {host}/api/cube/rotate
+     */
+    Route::post('rotate', 'rotate')->name('rotate');
 });
